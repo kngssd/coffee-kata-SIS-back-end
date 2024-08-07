@@ -59,6 +59,9 @@ app.post("/customers/:id/stamps", (req, res) => {
         const customer = customersList.find(
             (customer) => customer.id === customerID
         );
+        if (!customer) {
+            return res.status(500).json({ error: "Customer doesn't exist" });
+        }
         customer.stamps += 1;
         res.json(customer);
     } catch (error) {
