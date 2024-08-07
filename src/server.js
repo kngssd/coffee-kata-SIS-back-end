@@ -76,6 +76,15 @@ app.post("/customers/:id/stamps", (req, res) => {
 
 app.get("/customers/:id", (req, res) => {
     try {
+        const customerID = parseInt(req.params.id);
+        const customer = customersList.find(
+            (customer) => customer.id === customerID
+        );
+        if (!customer) {
+            return res.status(404).json({ error: "Customer doesn't exist" });
+        }
+
+        res.json(customer);
     } catch (error) {
         res.status(500).json({ error });
     }
