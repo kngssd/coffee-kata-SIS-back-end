@@ -29,7 +29,7 @@ app.post("/customers", (req, res) => {
     try {
         const { name } = req.body;
         if (!name) {
-            return res.status(500).json({ error: "Name is required" });
+            return res.status(404).json({ error: "Name is required" });
         }
         const newCustomer = {
             id: customersList.length + 1,
@@ -60,7 +60,7 @@ app.post("/customers/:id/stamps", (req, res) => {
             (customer) => customer.id === customerID
         );
         if (!customer) {
-            return res.status(500).json({ error: "Customer doesn't exist" });
+            return res.status(404).json({ error: "Customer doesn't exist" });
         }
         customer.stamps++;
 
@@ -69,6 +69,13 @@ app.post("/customers/:id/stamps", (req, res) => {
             customer.freeCoffees++;
         }
         res.json(customer);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+});
+
+app.get("/customers/:id", (req, res) => {
+    try {
     } catch (error) {
         res.status(500).json({ error });
     }
