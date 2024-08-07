@@ -90,6 +90,13 @@ app.get("/customers/:id", (req, res) => {
     }
 });
 
+app.post("/customer/:id/redeem", (req, res) => {
+    try {
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+});
+
 //use the environment variable PORT, or 4000 as a fallback
 const PORT = process.env.PORT ?? 4000;
 
