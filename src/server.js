@@ -62,11 +62,11 @@ app.post("/customers/:id/stamps", (req, res) => {
         if (!customer) {
             return res.status(500).json({ error: "Customer doesn't exist" });
         }
-        customer.stamps += 1;
+        customer.stamps++;
 
-        if (customer.stamps >= 6) {
+        if (customer.stamps > 6) {
             customer.stamps = 0;
-            customer.freeCoffees += 1;
+            customer.freeCoffees++;
         }
         res.json(customer);
     } catch (error) {
