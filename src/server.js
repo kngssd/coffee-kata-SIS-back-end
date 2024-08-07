@@ -20,17 +20,39 @@ app.get("/", (req, res) => {
 
 let customersList = [];
 
-app.post("/customers", async (req, res) => {
+app.post("/customers", (req, res) => {
     try {
         const { name } = req.body;
-        const newCustomer = { id: customersList.length + 1, name };
+        const newCustomer = {
+            id: customersList.length + 1,
+            name,
+            stamps: 0,
+            freeCoffee: 0,
+        };
         customersList.push(newCustomer);
 
-        res.status(201).json(newCustomer);
+        res.json(newCustomer);
     } catch (error) {
         res.status(500).json({ error });
     }
 });
+
+app.get("/customers", (req, res) => {
+    try {
+        res.json(customersList);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+});
+
+// app.post("/customers/:id/stamps", (req, res) => {
+//     try {
+//         const customerID = parseInt(req.params.id);
+
+//     } catch (error) {
+//         res.status(500).json({ error });
+//     }
+// });
 
 //use the environment variable PORT, or 4000 as a fallback
 const PORT = process.env.PORT ?? 4000;
