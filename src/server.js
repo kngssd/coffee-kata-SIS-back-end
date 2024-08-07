@@ -53,6 +53,19 @@ app.get("/customers", (req, res) => {
     }
 });
 
+app.post("/customers/:id/stamps", (req, res) => {
+    try {
+        const customerID = parseInt(req.params.id);
+        const customer = customersList.find(
+            (customer) => customer.id === customerID
+        );
+        customer.stamps += 1;
+        res.json(customer);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+});
+
 //use the environment variable PORT, or 4000 as a fallback
 const PORT = process.env.PORT ?? 4000;
 
