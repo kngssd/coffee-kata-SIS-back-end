@@ -18,16 +18,24 @@ app.get("/", (req, res) => {
     });
 });
 
-let customersList = [];
+let customersList = [
+    { id: 1, name: "Ali", stamps: 3, freeCoffees: 0 },
+    { id: 2, name: "Bilal", stamps: 5, freeCoffees: 0 },
+    { id: 3, name: "Charlie", stamps: 0, freeCoffees: 2 },
+    { id: 4, name: "Dani", stamps: 3, freeCoffees: 1 },
+];
 
 app.post("/customers", (req, res) => {
     try {
         const { name } = req.body;
+        if (!name) {
+            return res.status(500).json({ error: "Name is required" });
+        }
         const newCustomer = {
             id: customersList.length + 1,
             name,
             stamps: 0,
-            freeCoffee: 0,
+            freeCoffees: 0,
         };
         customersList.push(newCustomer);
 
@@ -44,15 +52,6 @@ app.get("/customers", (req, res) => {
         res.status(500).json({ error });
     }
 });
-
-// app.post("/customers/:id/stamps", (req, res) => {
-//     try {
-//         const customerID = parseInt(req.params.id);
-
-//     } catch (error) {
-//         res.status(500).json({ error });
-//     }
-// });
 
 //use the environment variable PORT, or 4000 as a fallback
 const PORT = process.env.PORT ?? 4000;
