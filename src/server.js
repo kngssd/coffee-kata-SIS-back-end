@@ -90,8 +90,23 @@ app.get("/customers/:id", (req, res) => {
     }
 });
 
-app.post("/customer/:id/redeem", (req, res) => {
+app.post("/customers/:id/redeem", (req, res) => {
     try {
+        const customerID = parseInt(req.params.id);
+        const customer = customersList.find(
+            (customer) => customer.id === customerID
+        );
+        if (!customer) {
+            return res.status(404).json({ error: "Customer doesn't exist" });
+        }
+        if (customer.freeCoffees < 1) {
+            return res.status(404).json({ error: "No free coffee available" });
+        }
+
+        if (customer.freeCoffees > 0) {
+            customer.freeCoffees--;
+        }
+        res.json(customer);
     } catch (error) {
         res.status(500).json({ error });
     }
