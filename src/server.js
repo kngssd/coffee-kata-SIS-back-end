@@ -11,6 +11,27 @@ app.use(cors());
 //parse body text of requests having content-type application/json, attaching result to `req.body`
 app.use(express.json());
 
+app.get("/", (req, res) => {
+    res.json({
+        outcome: "success",
+        message: "hello world",
+    });
+});
+
+let customersList = [];
+
+app.post("/customers", async (req, res) => {
+    try {
+        const { name } = req.body;
+        const newCustomer = { id: customersList.length + 1, name };
+        customersList.push(newCustomer);
+
+        res.status(201).json(newCustomer);
+    } catch (error) {
+        res.status(500).json({ error });
+    }
+});
+
 //use the environment variable PORT, or 4000 as a fallback
 const PORT = process.env.PORT ?? 4000;
 
